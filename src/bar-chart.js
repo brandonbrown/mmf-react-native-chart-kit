@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Svg, Rect, G } from "react-native-svg";
+import { Path, Svg, Rect, G } from "react-native-svg";
 import AbstractChart from "./abstract-chart";
 
 const barWidth = 32;
@@ -75,7 +75,7 @@ class BarChart extends AbstractChart {
       horizontalLabelRotation = 0,
       withInnerLines = true
     } = this.props;
-    const { borderRadius = 0, paddingTop = 16, paddingRight = this.props.chartConfig.chartPaddingLeft } = style;
+    const { borderRadius = 0, paddingTop = 16, paddingRight = this.props.chartPaddingLeft } = style;
     const config = {
       width,
       height,
