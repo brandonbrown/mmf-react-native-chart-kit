@@ -72,7 +72,7 @@ class BarChart extends AbstractChart {
       horizontalLabelRotation = 0,
       withInnerLines = true
     } = this.props;
-    const { borderRadius = 0, paddingTop = 16, paddingRight = 64 } = style;
+    const { borderRadius = 0, paddingTop = 16, paddingRight = this.props.chartConfig.chartPaddingLeft } = style;
     const config = {
       width,
       height,
