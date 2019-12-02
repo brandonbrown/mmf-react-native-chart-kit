@@ -17,23 +17,26 @@ class BarChart extends AbstractChart {
     return data.map((x, i) => {
       const barHeight = this.calcHeight(x, data, height);
       const barWidth = 32 * this.getBarPercentage();
+      const barX = paddingRight + (i * (width - paddingRight)) / data.length + barWidth / 2
+      const barY = ((barHeight > 0 ? baseHeight - barHeight : baseHeight) / 4) * 3 + paddingTop
+      const barTopRadius = this.props.chartConfig.topRadius
+      console.log(`bar ${i} x: `, barX )
+      console.log(`bar ${i} y: `, barY )
       return (
-        <Rect
+        <Path
           key={Math.random()}
-          x={
-            paddingRight +
-            (i * (width - paddingRight)) / data.length +
-            barWidth / 2
-          }
-          y={
-            ((barHeight > 0 ? baseHeight - barHeight : baseHeight) / 4) * 3 +
-            paddingTop
-          }
-          width={barWidth}
-          height={(Math.abs(barHeight) / 4) * 3}
-          fill="url(#fillShadowGradient)"
+          fill={this.props.chartConfig.color(1)}
+          d={`
+          M${barX},${barY}
+          h${barWidth - barTopRadius}
+          q${barTopRadius},0 ${barTopRadius}, ${barTopRadius}
+          v${(Math.abs(barHeight) / 4) * 3}
+          h${(barWidth) * -1}
+          v${(Math.abs(barHeight) / 4) * -3}
+          q0,-${barTopRadius} ${barTopRadius},-${barTopRadius}
+          z`}
         />
-      );
+      )
     });
   };
 
