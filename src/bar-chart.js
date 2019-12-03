@@ -21,10 +21,6 @@ class BarChart extends AbstractChart {
       const barY = ((barHeight > 0 ? baseHeight - barHeight : baseHeight) / 4) * 3 + paddingTop
       const barTopRadius = this.props.chartConfig.topRadius
       const barBottomRadius = this.props.chartConfig.bottomRadius
-      console.log(`bar ${i} x: `, barX )
-      console.log(`bar ${i} y: `, barY )
-      console.log(`bar ${i} height: `, barHeight )
-      console.log("MATH: ", (Math.abs(barHeight - barTopRadius - barBottomRadius) / 4) * 3)
       if(barHeight > 0){
       return (
         <Path
