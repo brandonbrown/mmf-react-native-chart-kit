@@ -1,7 +1,7 @@
 All of the changes you see within this repo are for specific use cases I've found I needed solutions to.
 [🐝See Original Repo for Full Documentation](https://github.com/indiespirit/react-native-chart-kit)
 
-#Changes
+# Changes
 ## Bar chart
 
 ![Bat Chart](https://i.imgur.com/jVHEWiI.jpg)
@@ -15,4 +15,3 @@ const chartConfig = {
   bottomRadius: 20
 };
 ```
-                                   |
