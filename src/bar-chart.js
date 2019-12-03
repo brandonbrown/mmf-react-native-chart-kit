@@ -20,48 +20,70 @@ class BarChart extends AbstractChart {
       const barX = paddingRight + (i * (width - paddingRight)) / data.length + barWidth / 2
       const barY = ((barHeight > 0 ? baseHeight - barHeight : baseHeight) / 4) * 3 + paddingTop
       const barTopRadius = this.props.chartConfig.topRadius
+      const barBottomRadius = this.props.chartConfig.bottomRadius
       console.log(`bar ${i} x: `, barX )
       console.log(`bar ${i} y: `, barY )
+      console.log(`bar ${i} height: `, barHeight )
+      console.log("MATH: ", (Math.abs(barHeight - barTopRadius - barBottomRadius) / 4) * 3)
+      if(barHeight > 0){
       return (
         <Path
           key={Math.random()}
           fill={this.props.chartConfig.color(1)}
           d={`
-          M${barX},${barY}
-          h${barWidth - barTopRadius}
-          q${barTopRadius},0 ${barTopRadius}, ${barTopRadius}
-          v${(Math.abs(barHeight) / 4) * 3}
-          h${(barWidth) * -1}
-          v${(Math.abs(barHeight) / 4) * -3}
+          M${barX + 32 - ((barBottomRadius - barTopRadius)/2) },${barY}
+          h${barWidth - barTopRadius - barBottomRadius}
+          q${barTopRadius},0 ${barTopRadius},${barTopRadius}
+          v${(Math.abs(barHeight - barTopRadius - barBottomRadius) / 4) * 3}
+          q0,${barBottomRadius} -${barBottomRadius},${barBottomRadius}
+          h${(barWidth - barTopRadius - barBottomRadius) * -1}
+          q-${barBottomRadius},0 -${barBottomRadius}, -${barBottomRadius}
+          v${(Math.abs(barHeight - barTopRadius - barBottomRadius) / 4) * -3}
           q0,-${barTopRadius} ${barTopRadius},-${barTopRadius}
           z`}
         />
       )
+      }else{
+        return (
+          <Rect
+            key={Math.random()}
+            x={
+              paddingRight +
+              (i * (width - paddingRight)) / data.length +
+              barWidth / 2
+            }
+            y={((baseHeight - barHeight) / 4) * 3 + paddingTop}
+            width={barWidth}
+            height={2}
+            fill={this.props.chartConfig.color(0.6)}
+          />
+        );
+      }
     });
   };
 
-  renderBarTops = config => {
-    const { data, width, height, paddingTop, paddingRight } = config;
-    const baseHeight = this.calcBaseHeight(data, height);
-    return data.map((x, i) => {
-      const barHeight = this.calcHeight(x, data, height);
-      const barWidth = 32 * this.getBarPercentage();
-      return (
-        <Rect
-          key={Math.random()}
-          x={
-            paddingRight +
-            (i * (width - paddingRight)) / data.length +
-            barWidth / 2
-          }
-          y={((baseHeight - barHeight) / 4) * 3 + paddingTop}
-          width={barWidth}
-          height={2}
-          fill={this.props.chartConfig.color(0.6)}
-        />
-      );
-    });
-  };
+  // renderBarTops = config => {
+  //   const { data, width, height, paddingTop, paddingRight } = config;
+  //   const baseHeight = this.calcBaseHeight(data, height);
+  //   return data.map((x, i) => {
+  //     const barHeight = this.calcHeight(x, data, height);
+  //     const barWidth = 32 * this.getBarPercentage();
+  //     return (
+  //       <Rect
+  //         key={Math.random()}
+  //         x={
+  //           paddingRight +
+  //           (i * (width - paddingRight)) / data.length +
+  //           barWidth / 2
+  //         }
+  //         y={((baseHeight - barHeight) / 4) * 3 + paddingTop}
+  //         width={barWidth}
+  //         height={2}
+  //         fill={this.props.chartConfig.color(0.6)}
+  //       />
+  //     );
+  //   });
+  // };
 
   render() {
     const {
@@ -135,14 +157,14 @@ class BarChart extends AbstractChart {
               paddingRight
             })}
           </G>
-          <G>
+          {/* <G>
             {this.renderBarTops({
               ...config,
               data: data.datasets[0].data,
               paddingTop,
               paddingRight
             })}
-          </G>
+          </G> */}
         </Svg>
       </View>
     );
